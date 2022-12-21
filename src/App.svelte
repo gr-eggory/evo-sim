@@ -38,7 +38,7 @@
 	<div class="output-grid">
 		<h3 class="optimal__label">Optimal:</h3>
 		<h2 class="optimal__value">{optimal}</h2>
-		<h3 class="success__label">Most successful child:</h3>
+		<h3 class="success__label">Current phenotype:</h3>
 		<h2 class="success__value">{closestIndividual}</h2>
 		<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
 		<h3 class="generation">Generation: {generation}</h3>
