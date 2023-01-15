@@ -1,37 +1,58 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { randomAlphaString, generateChildren, findBestChild, Child, similarity, prettifyPercent } from './util';
+	import { onMount, onDestroy, afterUpdate } from 'svelte';
+	import {
+		randomAlphaString,
+		generateChildren,
+		findBestChild,
+		Child,
+		similarity,
+		prettifyPercent,
+	} from './util';
 
+	let runSimulation = false;
 	let input = '';
 	let optimal = 'methinks it is like a weasel';
+	let interval: NodeJS.Timer;
+	let simulationFinished = false;
+
 	let mutationRate = 0.01;
 	let offspring = 15;
 	let generation = 0;
-	
-	let closestIndividual = randomAlphaString(optimal.length);
-	let currentSimilarity = similarity(closestIndividual, optimal);
-	let children = generateChildren(closestIndividual, mutationRate, offspring);
 
-	const assignOptimal = () => {
+	$: closestIndividual = randomAlphaString(optimal.length);
+	$: currentSimilarity = similarity(closestIndividual, optimal);
+	$: children = generateChildren(closestIndividual, mutationRate, offspring);
+
+	const assignOptimal = (e) => {
+		e.preventDefault();
 		optimal = input;
 	};
 
-	onMount(() => {
-		const interval = setInterval(() => {
+	const toggleSimulation = () => {
+		runSimulation = !runSimulation;
+		if (simulationFinished) {
+			closestIndividual = randomAlphaString(optimal.length);
+			generation = 0;
+			simulationFinished = false;
+		}
+	};
+
+	const beginSimulation = () => {
+		interval = setInterval(() => {
 			const newBest = findBestChild(children, optimal);
 			closestIndividual = newBest.text;
 			currentSimilarity = newBest.closeenessToOptimal;
 			children = generateChildren(closestIndividual, mutationRate, offspring);
 			if (closestIndividual === optimal) {
 				clearInterval(interval);
+				simulationFinished = true;
+				runSimulation = false;
 			}
 			generation++;
 		}, 10);
+	};
 
-		onDestroy(() => {
-			clearInterval(interval);
-		});
-	});
+	$: runSimulation ? beginSimulation() : clearInterval(interval);
 </script>
 
 <main>
@@ -43,8 +64,12 @@
 		<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
 		<h3 class="generation">Generation: {generation}</h3>
 	</div>
-	<input type="text" bind:value={input} on:submit={assignOptimal} />
-	<button>Begin Simulation</button>
+	<form on:submit={assignOptimal}>
+		<input type="text" bind:value={input} />
+	</form>
+	<button on:click={toggleSimulation}
+		>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
+	>
 </main>
 
 <style>
@@ -76,5 +101,9 @@
 
 	.generation {
 		grid-column: 2;
+	}
+
+	button {
+		cursor: pointer;
 	}
 </style>
