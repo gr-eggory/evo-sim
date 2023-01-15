@@ -54,7 +54,6 @@
 				{innerWidth}
 				{innerHeight}
 			/>
-			<!-- MARKS -->
 			<Line {linePath} />
 		</g>
 	</svg>
