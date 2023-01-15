@@ -56,20 +56,27 @@
 </script>
 
 <main>
-	<div class="output-grid">
-		<h3 class="optimal__label">Optimal:</h3>
-		<h2 class="optimal__value">{optimal}</h2>
-		<h3 class="success__label">Current phenotype:</h3>
-		<h2 class="success__value">{closestIndividual}</h2>
-		<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
-		<h3 class="generation">Generation: {generation}</h3>
+	<div class="sim-generation-panel">
+		<form on:submit={assignOptimal}>
+			<input type="text" bind:value={input} />
+		</form>
+		<button on:click={toggleSimulation}
+			>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
+		>
 	</div>
-	<form on:submit={assignOptimal}>
-		<input type="text" bind:value={input} />
-	</form>
-	<button on:click={toggleSimulation}
-		>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
-	>
+	<section class="output-grid">
+			<div class="simulation-configs-list">
+				<h3 class="optimal__label">Optimal:</h3>
+				<h2 class="optimal__value">{optimal}</h2>
+				<h3 class="success__label">Current phenotype:</h3>
+				<h2 class="success__value">{closestIndividual}</h2>
+				<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
+				<h3 class="generation">Generation: {generation}</h3>
+			</div>
+			<div class="graph-container">
+				
+			</div>
+	</section>
 </main>
 
 <style>
@@ -80,11 +87,19 @@
 	}
 
 	.output-grid {
+		/* display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); */
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.simulation-configs-list {
+		flex: 0 0 800px;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		width: 95%;
-		margin: 0 auto;
 		gap: 1rem;
+		align-content: flex-start;
 	}
 
 	.optimal__label {
@@ -101,6 +116,12 @@
 
 	.generation {
 		grid-column: 2;
+	}
+
+	.graph-container {
+		background-color: rgba(255, 0, 0, .2);
+		flex: 0 0 800px;
+		height: 800px;
 	}
 
 	button {
