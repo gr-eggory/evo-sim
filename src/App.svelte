@@ -102,20 +102,18 @@
 			<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
 			<h3 class="generation">Generation: {generation}</h3>
 		</div>
-		<div class="graph-container">
-			<Graph
-				{width}
-				{height}
-				{data}
-				{xValue}
-				{yValue}
-				{margin}
-				{xAxisLabelOffset}
-				{yAxisLabelOffset}
-				{xAxisLabel}
-				{yAxisLabel}
-			/>
-		</div>
+		<Graph
+			{width}
+			{height}
+			{data}
+			{xValue}
+			{yValue}
+			{margin}
+			{xAxisLabelOffset}
+			{yAxisLabelOffset}
+			{xAxisLabel}
+			{yAxisLabel}
+		/>
 	</section>
 </main>
 
@@ -156,28 +154,6 @@
 
 	.generation {
 		grid-column: 2;
-	}
-
-	.graph-container {
-		background-color: #efecea;
-		flex: 0 0 800px;
-		height: 500px;
-	}
-
-	.tick line {
-		stroke: #c0c0bb;
-	}
-
-	.tick-label {
-		fill: #635f5d;
-	}
-
-	.x-tick-label {
-		text-anchor: middle;
-	}
-
-	.y-tick-label {
-		text-anchor: end;
 	}
 
 	button {

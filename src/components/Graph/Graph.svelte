@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { scaleLinear, extent, line, curveNatural, max } from 'd3';
 
+	import AxisBottom from './subcomponents/AxisBottom.svelte';
+	import AxisLeft from './subcomponents/AxisLeft.svelte';
+	import Line from './subcomponents/Line.svelte';
 	import type { Margin } from '../../types/layout';
 
 	export let width: number;
@@ -34,45 +37,33 @@
 		.curve(curveNatural)(data);
 </script>
 
-<svg {width} {height}>
-	<g transform={`translate(${margin.left},${margin.top})`}>
-		<!-- AXIS BOTTOM -->
-		<text
-			class="axis-label"
-			x={innerWidth / 2}
-			y={innerHeight + xAxisLabelOffset}
-		>
-			{xAxisLabel}
-		</text>
-		{#each xScale.ticks() as tickValue (tickValue)}
-			<g class="tick" transform={`translate(${xScale(tickValue)},0)`}>
-				<line y2={innerHeight} />
-				<text class="tick-label x-tick-label" dy=".71em" y={innerHeight + 7}>
-					{tickValue}
-				</text>
-			</g>
-		{/each}
-		<!-- AXIS LEFT -->
-		<text
-			class="axis-label"
-			style="text-anchor: middle"
-			transform={`translate(${-yAxisLabelOffset},${
-				innerHeight / 2
-			}) rotate(-90)`}
-		>
-			{yAxisLabel}
-		</text>
-		{#each yScale.ticks() as tickValue (tickValue)}
-			<g class="tick" transform={`translate(0,${yScale(tickValue)})`}>
-				<line x2={innerWidth} />
-				<text class="tick-label y-tick-label" x={-3} dy=".32em">
-					{tickValue}
-				</text>
-			</g>
-		{/each}
-		<!-- MARKS -->
-		<g class="marks">
-			<path fill="none" stroke="#137B80" d={linePath} />
+<div class="graph-container">
+	<svg {width} {height}>
+		<g transform={`translate(${margin.left},${margin.top})`}>
+			<AxisBottom
+				{xAxisLabelOffset}
+				{xAxisLabel}
+				{xScale}
+				{innerWidth}
+				{innerHeight}
+			/>
+			<AxisLeft
+				{yAxisLabelOffset}
+				{yAxisLabel}
+				{yScale}
+				{innerWidth}
+				{innerHeight}
+			/>
+			<!-- MARKS -->
+			<Line {linePath} />
 		</g>
-	</g>
-</svg>
+	</svg>
+</div>
+
+<style>
+	.graph-container {
+		background-color: #efecea;
+		flex: 0 0 800px;
+		height: 500px;
+	}
+</style>
