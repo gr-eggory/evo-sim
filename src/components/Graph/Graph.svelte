@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scaleLinear, extent, line, curveNatural, max } from 'd3';
 
+	import Container from './subcomponents/Container.svelte';
 	import AxisBottom from './subcomponents/AxisBottom.svelte';
 	import AxisLeft from './subcomponents/AxisLeft.svelte';
 	import Line from './subcomponents/Line.svelte';
@@ -37,32 +38,20 @@
 		.curve(curveNatural)(data);
 </script>
 
-<div class="graph-container">
-	<svg {width} {height}>
-		<g transform={`translate(${margin.left},${margin.top})`}>
-			<AxisBottom
-				{xAxisLabelOffset}
-				{xAxisLabel}
-				{xScale}
-				{innerWidth}
-				{innerHeight}
-			/>
-			<AxisLeft
-				{yAxisLabelOffset}
-				{yAxisLabel}
-				{yScale}
-				{innerWidth}
-				{innerHeight}
-			/>
-			<Line {linePath} />
-		</g>
-	</svg>
-</div>
-
-<style>
-	.graph-container {
-		background-color: #efecea;
-		flex: 0 0 800px;
-		height: 500px;
-	}
-</style>
+<Container {width} {height} {margin}>
+	<AxisBottom
+		{xAxisLabelOffset}
+		{xAxisLabel}
+		{xScale}
+		{innerWidth}
+		{innerHeight}
+	/>
+	<AxisLeft
+		{yAxisLabelOffset}
+		{yAxisLabel}
+		{yScale}
+		{innerWidth}
+		{innerHeight}
+	/>
+	<Line {linePath} />
+</Container>
