@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import { scaleLinear, extent, line, curveNatural, max } from 'd3';
+
 	import type { Row } from './types/data';
+	import type { Margin } from './types/layout';
+	import Graph from './components/Graph/Graph.svelte';
 	import {
 		randomAlphaString,
 		generateChildren,
@@ -68,36 +71,15 @@
 	// GRAPH SECTION
 	const width = 800;
 	const height = 500;
-	const margin = { top: 20, right: 30, bottom: 65, left: 90 };
+	const margin: Margin = { top: 20, right: 30, bottom: 65, left: 90 };
 	const xAxisLabelOffset = 50;
 	const yAxisLabelOffset = 45;
-
-	const innerHeight = height - margin.top - margin.bottom;
-	const innerWidth = width - margin.left - margin.right;
 
 	const xAxisLabel = 'Generation';
 	const xValue = (d: Row) => d.generation;
 
 	const yAxisLabel = 'Similarity';
 	const yValue = (d: Row) => d.similarity;
-
-	$: xScale = scaleLinear()
-		.domain(extent(data, xValue))
-		.range([0, innerWidth])
-		.nice();
-	$: yScale = scaleLinear()
-		.domain([0, max(data, yValue)])
-		.range([innerHeight, 0])
-		.nice();
-
-	$: linePath = line<Row>()
-		.x((d) => xScale(xValue(d)))
-		.y((d) => yScale(yValue(d)))
-		.curve(curveNatural)(data);
-
-	$: {
-		console.log('xScale.ticks()', xScale.ticks());
-	}
 
 	// ---------
 </script>
@@ -121,52 +103,18 @@
 			<h3 class="generation">Generation: {generation}</h3>
 		</div>
 		<div class="graph-container">
-			<svg {width} {height}>
-				<g transform={`translate(${margin.left},${margin.top})`}>
-					<!-- AXIS BOTTOM -->
-					<text
-						class="axis-label"
-						x={innerWidth / 2}
-						y={innerHeight + xAxisLabelOffset}
-					>
-						{xAxisLabel}
-					</text>
-					{#each xScale.ticks() as tickValue (tickValue)}
-						<g class="tick" transform={`translate(${xScale(tickValue)},0)`}>
-							<line y2={innerHeight} />
-							<text
-								class="tick-label x-tick-label"
-								dy=".71em"
-								y={innerHeight + 7}
-							>
-								{tickValue}
-							</text>
-						</g>
-					{/each}
-					<!-- AXIS LEFT -->
-					<text
-						class="axis-label"
-						style="text-anchor: middle"
-						transform={`translate(${-yAxisLabelOffset},${
-							innerHeight / 2
-						}) rotate(-90)`}
-					>
-						{yAxisLabel}
-					</text>
-					{#each yScale.ticks() as tickValue (tickValue)}
-						<g class="tick" transform={`translate(0,${yScale(tickValue)})`}>
-							<line x2={innerWidth} />
-							<text class="tick-label y-tick-label" x={-3} dy=".32em">
-								{tickValue}
-							</text>
-						</g>
-					{/each}
-					<!-- MARKS -->
-					<g class="marks">
-						<path fill="none" stroke="#137B80" d={linePath} />
-					</g>
-				</g>
-			</svg>
+			<Graph
+				{width}
+				{height}
+				{data}
+				{xValue}
+				{yValue}
+				{margin}
+				{xAxisLabelOffset}
+				{yAxisLabelOffset}
+				{xAxisLabel}
+				{yAxisLabel}
+			/>
 		</div>
 	</section>
 </main>
