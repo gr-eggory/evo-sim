@@ -3,7 +3,6 @@
 		scaleLinear,
 		extent,
 		line,
-		curveNatural,
 		max,
 		groups,
 		scaleOrdinal,
@@ -28,7 +27,7 @@
 	export let data: T[];
 	export let xValue: (d: T) => number;
 	export let yValue: (d: T) => number;
-	export let zValue: (d: T) => string;
+	export let zValue: (d: T) => number;
 	export let zDomain: string[];
 
 	$: innerHeight = height - margin.top - margin.bottom;
@@ -49,8 +48,7 @@
 
 	$: linePathGenerator = line<T>()
 		.x((d) => xScale(xValue(d)))
-		.y((d) => yScale(yValue(d)))
-		.curve(curveNatural);
+		.y((d) => yScale(yValue(d)));
 
 	$: groupedData = groups(data, zValue);
 </script>
@@ -70,10 +68,10 @@
 		{innerWidth}
 		{innerHeight}
 	/>
-	{#each groupedData as [identifier, groupData] (identifier)}
+	{#each groupedData as [groupId, groupData] (groupId)}
 		<Line
 			linePath={linePathGenerator(groupData)}
-			stroke={colorScale(identifier)}
+			stroke={colorScale(`${groupId}`)}
 		/>
 	{/each}
 </Container>
