@@ -4,5 +4,11 @@
 </script>
 
 <g class="marks">
-	<path fill="none" {stroke} d={linePath} />
+	<path fill="none" {stroke} d={linePath} stroke-width="" />
 </g>
+
+<style>
+	path {
+		stroke-width: 3px;
+	}
+</style>
