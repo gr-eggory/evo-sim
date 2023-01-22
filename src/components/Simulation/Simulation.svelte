@@ -16,7 +16,7 @@
 	export let addRow: (row: Row) => void;
 
 	let interval: NodeJS.Timer;
-	let generation = 0;
+	let generation = 1;
 	let simulationFinished = false;
 
 	$: closestIndividual = randomAlphaString(optimal.length);
