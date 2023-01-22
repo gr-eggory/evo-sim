@@ -1,7 +1,8 @@
 <script lang="ts">
-    export let linePath: string;
+	export let stroke: string;
+	export let linePath: string;
 </script>
 
 <g class="marks">
-    <path fill="none" stroke="#137B80" d={linePath} />
+	<path fill="none" {stroke} d={linePath} />
 </g>
