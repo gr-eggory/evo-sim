@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { scaleLinear, extent, line, curveNatural, max } from 'd3';
+	import {
+		scaleLinear,
+		extent,
+		line,
+		curveNatural,
+		max,
+		groups,
+		scaleOrdinal,
+		schemeSet1,
+	} from 'd3';
 
 	import Container from './subcomponents/Container.svelte';
 	import AxisBottom from './subcomponents/AxisBottom.svelte';
@@ -19,6 +28,8 @@
 	export let data: T[];
 	export let xValue: (d: T) => number;
 	export let yValue: (d: T) => number;
+	export let zValue: (d: T) => string;
+	export let zDomain: string[];
 
 	$: innerHeight = height - margin.top - margin.bottom;
 	$: innerWidth = width - margin.left - margin.right;
@@ -32,10 +43,14 @@
 		.range([innerHeight, 0])
 		.nice();
 
-	$: linePath = line<T>()
+	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1);
+
+	$: linePathGenerator = line<T>()
 		.x((d) => xScale(xValue(d)))
 		.y((d) => yScale(yValue(d)))
-		.curve(curveNatural)(data);
+		.curve(curveNatural);
+
+	$: groupedData = groups(data, zValue);
 </script>
 
 <Container {width} {height} {margin}>
@@ -53,5 +68,10 @@
 		{innerWidth}
 		{innerHeight}
 	/>
-	<Line {linePath} />
+	{#each groupedData as [identifier, groupData] (identifier)}
+		<Line
+			linePath={linePathGenerator(groupData)}
+			stroke={colorScale(identifier)}
+		/>
+	{/each}
 </Container>

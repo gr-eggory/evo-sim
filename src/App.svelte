@@ -1,73 +1,67 @@
 <script lang="ts">
-	import { onMount, onDestroy, afterUpdate } from 'svelte';
-	import { scaleLinear, extent, line, curveNatural, max } from 'd3';
-
-	import type { Row } from './types/data';
+	import type { Row, SimulationConfig } from './types/data';
 	import type { Margin } from './types/layout';
 	import Graph from './components/Graph/Graph.svelte';
-	import {
-		randomAlphaString,
-		generateChildren,
-		findBestChild,
-		Child,
-		similarity,
-		prettifyPercent,
-	} from './util';
+	import Simulation from './components/Simulation/Simulation.svelte';
+	import type { FormSubmitEvent } from './types/dom';
+
+	const defaultOptimal = '';
+	const defaultMutationRate = 0.01;
+	const defulatOffspring = 20;
+
+	let optimalInput = defaultOptimal;
+	let mutationRateInput = defaultMutationRate;
+	let offspringInput = defulatOffspring;
 
 	let runSimulation = false;
-	let input = '';
-	let optimal = 'methinks it is like a weasel';
-	let interval: NodeJS.Timer;
 	let simulationFinished = false;
 
-	let mutationRate = 0.01;
-	let offspring = 25;
-	let generation = 0;
+	const initialSim: SimulationConfig = {
+		identifier: '1',
+		optimal: 'methinks it is like a weasel',
+		mutationRate: 0.01,
+		offspring: 25,
+	};
 
 	// GRAPH
+	let simulations: SimulationConfig[] = [initialSim];
 	let data: Row[] = [];
 	// ------
 
-	$: closestIndividual = randomAlphaString(optimal.length);
-	$: currentSimilarity = similarity(closestIndividual, optimal);
-	$: children = generateChildren(closestIndividual, mutationRate, offspring);
+	const addRow = (row: Row) => {
+		data.push(row);
+		data = data;
+	};
 
-	const assignOptimal = (e) => {
-		e.preventDefault();
-		optimal = input;
+	const addSimulation = (event: FormSubmitEvent) => {
+		event.preventDefault();
+		if (!optimalInput || !offspringInput) {
+			return;
+		}
+		const identifier = `${simulations.length + 1}`;
+		simulations = [
+			...simulations,
+			{
+				identifier,
+				optimal: optimalInput,
+				mutationRate: mutationRateInput,
+				offspring: offspringInput,
+			},
+		];
+		optimalInput = defaultOptimal;
+		mutationRateInput = defaultMutationRate;
+		offspringInput = defulatOffspring;
 	};
 
 	const toggleSimulation = () => {
 		runSimulation = !runSimulation;
-		if (simulationFinished) {
-			closestIndividual = randomAlphaString(optimal.length);
-			generation = 0;
-			simulationFinished = false;
-			data = [];
-		}
+		// if (simulationFinished) {
+		// 	closestIndividual = randomAlphaString(optimal.length);
+		// 	generation = 0;
+		// 	simulationFinished = false;
+		// 	data = [];
+		// }
 	};
-
-	const beginSimulation = () => {
-		interval = setInterval(() => {
-			const newBest = findBestChild(children, optimal);
-			closestIndividual = newBest.text;
-			currentSimilarity = newBest.closeenessToOptimal;
-			children = generateChildren(closestIndividual, mutationRate, offspring);
-			data = [
-				...data,
-				{ identifier: `${1}`, generation, similarity: currentSimilarity * 100 },
-			];
-			if (closestIndividual === optimal) {
-				clearInterval(interval);
-				simulationFinished = true;
-				runSimulation = false;
-			}
-			generation++;
-		}, 10);
-	};
-
-	$: runSimulation ? beginSimulation() : clearInterval(interval);
-
 	// GRAPH SECTION
 	const width = 800;
 	const height = 500;
@@ -81,33 +75,41 @@
 	const yAxisLabel = 'Similarity';
 	const yValue = (d: Row) => d.similarity;
 
-	// ---------
+	const zValue = (d: Row | { identifier: string }) => d.identifier;
+	$: zDomain = simulations.map(zValue);
 </script>
 
 <main>
 	<div class="sim-generation-panel">
-		<form on:submit={assignOptimal}>
-			<input type="text" bind:value={input} />
+		<form on:submit={addSimulation}>
+			<input bind:value={optimalInput} type="text" />
+			<input bind:value={offspringInput} type="number" />
+			<input bind:value={mutationRateInput} type="number" step=".01" />
+			<button type="submit">Submit</button>
 		</form>
-		<button on:click={toggleSimulation}
-			>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
-		>
 	</div>
+	{#each simulations as { identifier, optimal, mutationRate, offspring } (identifier)}
+		<Simulation
+			{identifier}
+			{optimal}
+			{mutationRate}
+			{offspring}
+			{addRow}
+			{runSimulation}
+		/>
+	{/each}
+	<button on:click={toggleSimulation}
+		>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
+	>
 	<section class="output-grid">
-		<div class="simulation-configs-list">
-			<h3 class="optimal__label">Optimal:</h3>
-			<h2 class="optimal__value">{optimal}</h2>
-			<h3 class="success__label">Current phenotype:</h3>
-			<h2 class="success__value">{closestIndividual}</h2>
-			<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
-			<h3 class="generation">Generation: {generation}</h3>
-		</div>
 		<Graph
 			{width}
 			{height}
 			{data}
 			{xValue}
 			{yValue}
+			{zValue}
+			{zDomain}
 			{margin}
 			{xAxisLabelOffset}
 			{yAxisLabelOffset}
@@ -130,30 +132,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-	}
-
-	.simulation-configs-list {
-		flex: 0 0 800px;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-		align-content: flex-start;
-	}
-
-	.optimal__label {
-		grid-column: 1;
-	}
-
-	.optimal__value {
-		grid-column: 2;
-	}
-
-	.success__label {
-		grid-column: 1;
-	}
-
-	.generation {
-		grid-column: 2;
 	}
 
 	button {
