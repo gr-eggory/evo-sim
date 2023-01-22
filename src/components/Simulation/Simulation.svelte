@@ -11,8 +11,8 @@
 	export let identifier: string;
 	export let runSimulation: boolean;
 	export let optimal: string;
-	export let mutationRate = 0.01;
-	export let offspring = 25;
+	export let mutationRate: number;
+	export let offspring: number;
 	export let addRow: (row: Row) => void;
 
 	let interval: NodeJS.Timer;
@@ -58,6 +58,7 @@
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
 		align-content: flex-start;
+		border-bottom: 1px solid rgba(38, 30, 30, .5);
 	}
 
 	.optimal__label {
