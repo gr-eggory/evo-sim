@@ -43,7 +43,9 @@
 		.range([innerHeight, 0])
 		.nice();
 
-	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1);
+	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1) as (
+		id: string
+	) => string;
 
 	$: linePathGenerator = line<T>()
 		.x((d) => xScale(xValue(d)))
