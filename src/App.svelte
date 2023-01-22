@@ -15,6 +15,7 @@
 
 	let runSimulation = false;
 	let simulationFinished = false;
+	let logorithmic = false;
 
 	const initialSim: SimulationConfig = {
 		identifier: '1',
@@ -77,6 +78,9 @@
 
 	const zValue = (d: Row | { identifier: string }) => d.identifier;
 	$: zDomain = simulations.map(zValue);
+	$: alteredData = logorithmic
+		? data.map((d) => ({ ...d, generation: Math.log10(d.generation) }))
+		: data;
 </script>
 
 <main>
@@ -101,11 +105,13 @@
 	<button on:click={toggleSimulation}
 		>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
 	>
+	<label for="log-checkbox">logorithmic</label>
+	<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
 	<section class="output-grid">
 		<Graph
 			{width}
 			{height}
-			{data}
+			data={alteredData}
 			{xValue}
 			{yValue}
 			{zValue}
@@ -135,6 +141,11 @@
 	}
 
 	button {
+		cursor: pointer;
+	}
+
+	input[type='checkbox'],
+	label {
 		cursor: pointer;
 	}
 </style>
