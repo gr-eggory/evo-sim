@@ -1,4 +1,4 @@
-import { alphabet } from '../constants.ts';
+import { alphabet } from '../constants';
 
 export const randomAlphaString = (
 	length: number,
