@@ -1,4 +1,5 @@
 import { alphabet } from '../constants';
+import { State } from '../types/data';
 
 export const randomAlphaString = (
 	length: number,
@@ -70,3 +71,6 @@ export const generateChildren = (
 
 export const prettifyPercent = (percent: number): string =>
 	`${(percent * 100).toString().substring(0, 4)}%`;
+
+export const allSimsReady = (numOfSims: number): State[] =>
+	new Array(numOfSims).fill(State.READY_TO_RUN);
