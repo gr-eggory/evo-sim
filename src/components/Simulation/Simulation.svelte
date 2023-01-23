@@ -22,13 +22,16 @@
 	let generation = 1;
 	let simulationFinished = false;
 	let resetOnNextPlay = false;
+	let isFirstRender = true;
 
 	$: closestIndividual = randomAlphaString(optimal.length);
 	$: currentSimilarity = similarity(closestIndividual, optimal);
 	$: children = generateChildren(closestIndividual, mutationRate, offspring);
 
 	$: {
-		if (allSimsFinished) {
+		if (isFirstRender) {
+			isFirstRender = false;
+		} else if (allSimsFinished) {
 			resetOnNextPlay = true;
 		}
 	}
