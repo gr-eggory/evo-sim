@@ -56,12 +56,16 @@
 		if (!optimalInput || !offspringInput) {
 			return;
 		}
+		const cleanedOptimal = optimalInput.toLowerCase().replaceAll(/[\W_0-9]/g, '');
+		if (!cleanedOptimal) {
+			return;
+		}
 		const id = simulations.length;
 		simulations = [
 			...simulations,
 			{
 				id,
-				optimal: optimalInput,
+				optimal: cleanedOptimal,
 				mutationRate: mutationRateInput,
 				offspring: offspringInput,
 			},
