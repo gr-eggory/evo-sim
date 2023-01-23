@@ -29,6 +29,7 @@
 	export let yValue: (d: T) => number;
 	export let zValue: (d: T) => number;
 	export let zDomain: string[];
+	export let colorScale: (id: string) => string;
 
 	$: innerHeight = height - margin.top - margin.bottom;
 	$: innerWidth = width - margin.left - margin.right;
@@ -37,14 +38,7 @@
 		.domain(extent(data, xValue))
 		.range([0, innerWidth])
 		.nice();
-	$: yScale = scaleLinear()
-		.domain([0, 100])
-		.range([innerHeight, 0])
-		.nice();
-
-	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1) as (
-		id: string
-	) => string;
+	$: yScale = scaleLinear().domain([0, 100]).range([innerHeight, 0]).nice();
 
 	$: linePathGenerator = line<T>()
 		.x((d) => xScale(xValue(d)))
