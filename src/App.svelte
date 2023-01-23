@@ -104,7 +104,7 @@
 			<input bind:value={optimalInput} type="text" />
 			<input bind:value={offspringInput} type="number" />
 			<input bind:value={mutationRateInput} type="number" step=".01" />
-			<button type="submit">Submit</button>
+			<button type="submit" disabled={runSimulation}>Submit</button>
 		</form>
 	</div>
 	{#each simulations as { id, optimal, mutationRate, offspring } (id)}
