@@ -15,6 +15,7 @@
 	export let optimal: string;
 	export let mutationRate: number;
 	export let offspring: number;
+	export let textColor: string;
 	export let addRow: (row: Row) => void;
 	export let dispatchState: (id: number, ended: State) => void;
 
@@ -75,7 +76,7 @@
 	<h3 class="optimal__label">Optimal:</h3>
 	<h2 class="optimal__value">{optimal}</h2>
 	<h3 class="success__label">Current phenotype:</h3>
-	<h2 class="success__value">{closestIndividual}</h2>
+	<h2 class="success__value" style={`color: ${textColor};`}>{closestIndividual}</h2>
 	<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
 	<h3 class="generation">Generation: {generation}</h3>
 </div>
