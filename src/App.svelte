@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { Row, SimulationConfig } from './types/data';
+	import { State } from './types/data';
 	import type { Margin } from './types/layout';
 	import Graph from './components/Graph/Graph.svelte';
 	import Simulation from './components/Simulation/Simulation.svelte';
 	import type { FormSubmitEvent } from './types/dom';
+	import { allSimsReady } from './util';
 
 	const defaultOptimal = '';
 	const defaultMutationRate = 0.01;
@@ -14,11 +16,10 @@
 	let offspringInput = defulatOffspring;
 
 	let runSimulation = false;
-	let simulationFinished = false;
 	let logorithmic = false;
 
 	const initialSim: SimulationConfig = {
-		identifier: '1',
+		id: 0,
 		optimal: 'methinks it is like a weasel',
 		mutationRate: 0.01,
 		offspring: 25,
@@ -27,6 +28,8 @@
 	// GRAPH
 	let simulations: SimulationConfig[] = [initialSim];
 	let data: Row[] = [];
+	$: simStates = allSimsReady(simulations.length);
+	let allSimsFinished = false;
 	// ------
 
 	const addRow = (row: Row) => {
@@ -34,16 +37,29 @@
 		data = data;
 	};
 
+	const dispatchState = (id: number, state: State): void => {
+		simStates[id] = state;
+		const allSimsAreNowFinished = simStates.every(
+			(sim) => sim === State.I_HAVE_FINISHED
+		);
+		if (!allSimsAreNowFinished) {
+			return;
+		}
+		runSimulation = false;
+		allSimsFinished = true;
+		return;
+	};
+
 	const addSimulation = (event: FormSubmitEvent) => {
 		event.preventDefault();
 		if (!optimalInput || !offspringInput) {
 			return;
 		}
-		const identifier = `${simulations.length + 1}`;
+		const id = simulations.length;
 		simulations = [
 			...simulations,
 			{
-				identifier,
+				id,
 				optimal: optimalInput,
 				mutationRate: mutationRateInput,
 				offspring: offspringInput,
@@ -55,13 +71,12 @@
 	};
 
 	const toggleSimulation = () => {
+		if (allSimsFinished) {
+			data = [];
+			simStates = allSimsReady(simulations.length);
+			allSimsFinished = false;
+		}
 		runSimulation = !runSimulation;
-		// if (simulationFinished) {
-		// 	closestIndividual = randomAlphaString(optimal.length);
-		// 	generation = 0;
-		// 	simulationFinished = false;
-		// 	data = [];
-		// }
 	};
 	// GRAPH SECTION
 	const width = 800;
@@ -76,8 +91,8 @@
 	const yAxisLabel = 'Similarity';
 	const yValue = (d: Row) => d.similarity;
 
-	const zValue = (d: Row | { identifier: string }) => d.identifier;
-	$: zDomain = simulations.map(zValue);
+	const zValue = (d: Row | { id: number }) => d.id;
+	$: zDomain = simulations.map(({ id }) => `${id}`);
 	$: alteredData = logorithmic
 		? data.map((d) => ({ ...d, generation: Math.log10(d.generation) }))
 		: data;
@@ -92,18 +107,20 @@
 			<button type="submit">Submit</button>
 		</form>
 	</div>
-	{#each simulations as { identifier, optimal, mutationRate, offspring } (identifier)}
+	{#each simulations as { id, optimal, mutationRate, offspring } (id)}
 		<Simulation
-			{identifier}
+			{id}
 			{optimal}
 			{mutationRate}
 			{offspring}
 			{addRow}
+			{dispatchState}
 			{runSimulation}
+			{allSimsFinished}
 		/>
 	{/each}
 	<button on:click={toggleSimulation}
-		>{runSimulation && !simulationFinished ? 'Stop' : 'Begin'} Simulation</button
+		>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
 	>
 	<label for="log-checkbox">logorithmic</label>
 	<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
