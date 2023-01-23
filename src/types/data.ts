@@ -1,12 +1,18 @@
 export interface Row {
-	identifier: string;
+	id: number;
 	generation: number;
 	similarity: number;
 }
 
 export interface SimulationConfig {
-	identifier: string;
+	id: number;
 	optimal: string;
 	mutationRate: number;
 	offspring: number;
+}
+
+export enum State {
+	READY_TO_RUN = 'ready to run',
+	I_HAVE_FINISHED = 'I have finished',
+	RUNNING = 'running',
 }
