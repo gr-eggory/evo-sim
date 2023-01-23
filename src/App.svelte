@@ -6,6 +6,7 @@
 	import Simulation from './components/Simulation/Simulation.svelte';
 	import type { FormSubmitEvent } from './types/dom';
 	import { allSimsReady } from './util';
+	import { scaleOrdinal, schemeSet1 } from 'd3';
 
 	const defaultOptimal = '';
 	const defaultMutationRate = 0.01;
@@ -93,6 +94,9 @@
 
 	const zValue = (d: Row | { id: number }) => d.id;
 	$: zDomain = simulations.map(({ id }) => `${id}`);
+	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1) as (
+		id: string
+	) => string;
 	$: alteredData = logorithmic
 		? data.map((d) => ({ ...d, generation: Math.log10(d.generation) }))
 		: data;
@@ -113,6 +117,7 @@
 			{optimal}
 			{mutationRate}
 			{offspring}
+			textColor={colorScale(`${id}`)}
 			{addRow}
 			{dispatchState}
 			{runSimulation}
@@ -133,6 +138,7 @@
 			{yValue}
 			{zValue}
 			{zDomain}
+			{colorScale}
 			{margin}
 			{xAxisLabelOffset}
 			{yAxisLabelOffset}
