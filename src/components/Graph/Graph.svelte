@@ -38,7 +38,7 @@
 		.range([0, innerWidth])
 		.nice();
 	$: yScale = scaleLinear()
-		.domain([0, max(data, yValue)])
+		.domain([0, 100])
 		.range([innerHeight, 0])
 		.nice();
 
