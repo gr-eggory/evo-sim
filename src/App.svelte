@@ -56,7 +56,10 @@
 		if (!optimalInput || !offspringInput) {
 			return;
 		}
-		const cleanedOptimal = optimalInput.toLowerCase().replaceAll(/[\W_0-9]/g, '');
+		const cleanedOptimal = optimalInput
+			.toLowerCase()
+			.replaceAll(/[^a-z\s]/g, '')
+			.trim();
 		if (!cleanedOptimal) {
 			return;
 		}
@@ -141,7 +144,6 @@
 			{xValue}
 			{yValue}
 			{zValue}
-			{zDomain}
 			{colorScale}
 			{margin}
 			{xAxisLabelOffset}

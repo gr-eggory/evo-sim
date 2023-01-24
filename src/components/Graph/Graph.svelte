@@ -28,7 +28,6 @@
 	export let xValue: (d: T) => number;
 	export let yValue: (d: T) => number;
 	export let zValue: (d: T) => number;
-	export let zDomain: string[];
 	export let colorScale: (id: string) => string;
 
 	$: innerHeight = height - margin.top - margin.bottom;
