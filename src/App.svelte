@@ -110,55 +110,96 @@
 </script>
 
 <main>
-	<div class="sim-generation-panel">
-		<form on:submit={addSimulation}>
-			<input bind:value={optimalInput} type="text" />
-			<input bind:value={offspringInput} type="number" />
-			<input bind:value={mutationRateInput} type="number" step=".01" />
-			<button type="submit" disabled={runSimulation}>Submit</button>
-		</form>
+	<div class="substitute-main">
+		<div class="config box" />
+		<div class="graph box" />
+		<div class="sims box" />
 	</div>
-	{#each simulations as { id, optimal, mutationRate, offspring } (id)}
-		<Simulation
-			{id}
-			{optimal}
-			{mutationRate}
-			{offspring}
-			textColor={colorScale(`${id}`)}
-			{addRow}
-			{dispatchState}
-			{runSimulation}
-			{allSimsFinished}
-		/>
-	{/each}
-	<button on:click={toggleSimulation}
-		>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
-	>
-	<label for="log-checkbox">logorithmic</label>
-	<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
-	<section class="output-grid">
-		<Graph
-			{width}
-			{height}
-			data={alteredData}
-			{xValue}
-			{yValue}
-			{zValue}
-			{colorScale}
-			{margin}
-			{xAxisLabelOffset}
-			{yAxisLabelOffset}
-			{xAxisLabel}
-			{yAxisLabel}
-		/>
-	</section>
+	<div>
+		<div class="sim-generation-panel">
+			<form on:submit={addSimulation}>
+				<input bind:value={optimalInput} type="text" />
+				<input bind:value={offspringInput} type="number" />
+				<input bind:value={mutationRateInput} type="number" step=".01" />
+				<button type="submit" disabled={runSimulation}>Submit</button>
+			</form>
+		</div>
+		{#each simulations as { id, optimal, mutationRate, offspring } (id)}
+			<Simulation
+				{id}
+				{optimal}
+				{mutationRate}
+				{offspring}
+				textColor={colorScale(`${id}`)}
+				{addRow}
+				{dispatchState}
+				{runSimulation}
+				{allSimsFinished}
+			/>
+		{/each}
+		<button on:click={toggleSimulation}
+			>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
+		>
+		<label for="log-checkbox">logorithmic</label>
+		<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
+		<section class="output-grid">
+			<Graph
+				{width}
+				{height}
+				data={alteredData}
+				{xValue}
+				{yValue}
+				{zValue}
+				{colorScale}
+				{margin}
+				{xAxisLabelOffset}
+				{yAxisLabelOffset}
+				{xAxisLabel}
+				{yAxisLabel}
+			/>
+		</section>
+	</div>
 </main>
 
 <style>
 	main {
 		min-height: 100vh;
 		background-color: whitesmoke;
-		padding-top: 5rem;
+	}
+
+	.substitute-main {
+		--gap: 3rem;
+		min-height: 100vh;
+		background-color: whitesmoke;
+		display: grid;
+		grid-template-areas:
+			'c c c c g g g g g g g g'
+			'c c c c g g g g g g g g'
+			'c c c c g g g g g g g g'
+			's s s s s s s s s s s s'
+			's s s s s s s s s s s s';
+		grid-gap: 4rem;
+		padding: 3rem;
+	}
+
+	.box {
+		border-radius: 4px;
+		box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.6);
+	}
+
+	.config {
+		grid-area: c;
+		background-color: aqua;
+	}
+
+	.graph {
+		grid-area: g;
+		background-color: crimson;
+	}
+
+	.sims {
+		grid-area: s;
+		background-color: chartreuse;
 	}
 
 	.output-grid {
