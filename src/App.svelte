@@ -110,17 +110,20 @@
 </script>
 
 <main>
-	<div class="substitute-main">
+	<!-- <div class="substitute-main">
 		<div class="config box" />
 		<div class="graph box" />
 		<div class="sims box" />
-	</div>
-	<div>
+	</div> -->
+	<div style="padding-top: 4rem;">
 		<div class="sim-generation-panel">
 			<form on:submit={addSimulation}>
-				<input bind:value={optimalInput} type="text" />
-				<input bind:value={offspringInput} type="number" />
-				<input bind:value={mutationRateInput} type="number" step=".01" />
+				<label for="optimal">Optimal phenotype</label>
+				<input bind:value={optimalInput} type="text" id="optimal" />
+				<label for="offspring">Offspring per Generation</label>
+				<input bind:value={offspringInput} type="number" id="offspring" />
+				<label for="mutation-rate">Mutation rate</label>
+				<input bind:value={mutationRateInput} type="number" step=".01" id="mutation-rate" />
 				<button type="submit" disabled={runSimulation}>Submit</button>
 			</form>
 		</div>
