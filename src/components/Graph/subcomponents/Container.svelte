@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { Margin } from '../../../types/layout';
 
-	export let width: number;
-	export let height: number;
 	export let margin: Margin;
+
+	$: transform = `translate(${margin.left},${margin.top})`;
 </script>
 
 <div class="graph-container">
-	<svg {width} {height}>
-		<g transform={`translate(${margin.left},${margin.top})`}>
+	<svg width="100%" height="100%">
+		<g {transform}>
 			<slot />
 		</g>
 	</svg>
@@ -17,7 +17,8 @@
 <style>
 	.graph-container {
 		background-color: #efecea;
-		flex: 0 0 800px;
-		height: 500px;
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
 	}
 </style>

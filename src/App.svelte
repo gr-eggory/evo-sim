@@ -87,9 +87,9 @@
 		runSimulation = !runSimulation;
 	};
 	// GRAPH SECTION
-	const width = 800;
-	const height = 500;
-	const margin: Margin = { top: 20, right: 30, bottom: 65, left: 90 };
+	let width: number;
+	let height: number;
+	const margin: Margin = { top: 40, right: 30, bottom: 70, left: 80 };
 	const xAxisLabelOffset = 50;
 	const yAxisLabelOffset = 45;
 
@@ -110,11 +110,49 @@
 </script>
 
 <main>
-	<!-- <div class="substitute-main">
-		<div class="config box" />
-		<div class="graph box" />
+	<div class="substitute-main">
+		<div class="config box">
+			<form on:submit={addSimulation}>
+				<label for="optimal">Optimal phenotype</label>
+				<input bind:value={optimalInput} type="text" id="optimal" />
+				<label for="offspring">Offspring per Generation</label>
+				<input bind:value={offspringInput} type="number" id="offspring" />
+				<label for="mutation-rate">Mutation rate</label>
+				<input
+					bind:value={mutationRateInput}
+					type="number"
+					step=".01"
+					id="mutation-rate"
+				/>
+				<button type="submit" disabled={runSimulation}>Add Simulation</button>
+			</form>
+			<hr />
+			<div>
+				<button on:click={toggleSimulation}
+					>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
+				>
+				<label for="log-checkbox">logorithmic</label>
+				<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
+			</div>
+		</div>
+		<div class="graph box" bind:clientWidth={width} bind:clientHeight={height}>
+			<Graph
+				width={width - 20}
+				height={height - 20}
+				data={alteredData}
+				{xValue}
+				{yValue}
+				{zValue}
+				{colorScale}
+				{margin}
+				{xAxisLabelOffset}
+				{yAxisLabelOffset}
+				{xAxisLabel}
+				{yAxisLabel}
+			/>
+		</div>
 		<div class="sims box" />
-	</div> -->
+	</div>
 	<div style="padding-top: 4rem;">
 		<div class="sim-generation-panel">
 			<form on:submit={addSimulation}>
@@ -123,7 +161,12 @@
 				<label for="offspring">Offspring per Generation</label>
 				<input bind:value={offspringInput} type="number" id="offspring" />
 				<label for="mutation-rate">Mutation rate</label>
-				<input bind:value={mutationRateInput} type="number" step=".01" id="mutation-rate" />
+				<input
+					bind:value={mutationRateInput}
+					type="number"
+					step=".01"
+					id="mutation-rate"
+				/>
 				<button type="submit" disabled={runSimulation}>Submit</button>
 			</form>
 		</div>
@@ -171,28 +214,35 @@
 	}
 
 	.substitute-main {
-		--gap: 3rem;
 		min-height: 100vh;
 		background-color: whitesmoke;
 		display: grid;
 		grid-template-areas:
-			'c c c c g g g g g g g g'
-			'c c c c g g g g g g g g'
-			'c c c c g g g g g g g g'
+			'c c c g g g g g g g g g'
+			'c c c g g g g g g g g g'
+			'c c c g g g g g g g g g'
 			's s s s s s s s s s s s'
 			's s s s s s s s s s s s';
-		grid-gap: 4rem;
-		padding: 3rem;
+		grid-gap: 3rem;
+		padding: 2rem;
 	}
 
 	.box {
+		background-color: white;
 		border-radius: 4px;
-		box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.6);
+		box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.5);
 	}
 
 	.config {
 		grid-area: c;
-		background-color: aqua;
+		padding: 1rem;
+		/* background-color: aqua; */
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
 	}
 
 	.graph {
@@ -217,8 +267,7 @@
 		cursor: pointer;
 	}
 
-	input[type='checkbox'],
-	label {
+	input[type='checkbox'] {
 		cursor: pointer;
 	}
 </style>

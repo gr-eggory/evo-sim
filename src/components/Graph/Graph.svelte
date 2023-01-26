@@ -46,7 +46,7 @@
 	$: groupedData = groups(data, zValue);
 </script>
 
-<Container {width} {height} {margin}>
+<Container {margin}>
 	<AxisBottom
 		{xAxisLabelOffset}
 		{xAxisLabel}
