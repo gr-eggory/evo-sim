@@ -152,6 +152,11 @@
 			/>
 		</div>
 		<div class="sims box">
+			<p>Optimal/Current</p>
+			<p>Mutation Rate</p>
+			<p>Children per Gen</p>
+			<p>Generation</p>
+			<p>Similarity</p>
 			{#each simulations as { id, optimal, mutationRate, offspring } (id)}
 				<Simulation
 					{id}
@@ -270,6 +275,11 @@
 	.sims {
 		grid-area: s;
 		overflow-y: scroll;
+		padding: .75rem;
+		display: grid;
+		grid-template-columns: 2fr repeat(4, 1fr);
+		grid-template-rows: 50px;
+		grid-auto-rows: 60px;
 	}
 
 	.output-grid {

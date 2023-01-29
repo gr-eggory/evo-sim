@@ -72,16 +72,35 @@
 	$: runSimulation ? beginSimulation() : clearInterval(interval);
 </script>
 
-<div class="simulation-configs-list">
+<!-- <div class="simulation-configs-list">
 	<h3 class="optimal__label">Optimal:</h3>
 	<h2 class="optimal__value">{optimal}</h2>
 	<h3 class="success__label">Current phenotype:</h3>
 	<h2 class="success__value" style={`color: ${textColor};`}>{closestIndividual}</h2>
 	<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
 	<h3 class="generation">Generation: {generation}</h3>
+</div> -->
+<!-- <div class="sim-container"> -->
+<div>
+	<p>{optimal}</p>
+	<p style={`color: ${textColor};`}>
+		{closestIndividual}
+	</p>
 </div>
+<p>{mutationRate}</p>
+<p>{offspring}</p>
+<p>{generation}</p>
+<p>{prettifyPercent(currentSimilarity)}</p>
 
+<!-- </div> -->
 <style>
+	.sim-container {
+		display: grid;
+		grid-template-columns: 2fr repeat(4, 1fr);
+		grid-template-rows: 50px;
+		grid-auto-rows: 60px;
+	}
+
 	.simulation-configs-list {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
