@@ -151,9 +151,24 @@
 				{yAxisLabel}
 			/>
 		</div>
-		<div class="sims box" />
+		<div class="sims box">
+			{#each simulations as { id, optimal, mutationRate, offspring } (id)}
+				<Simulation
+					{id}
+					{optimal}
+					{mutationRate}
+					{offspring}
+					textColor={colorScale(`${id}`)}
+					{addRow}
+					{dispatchState}
+					{runSimulation}
+					{allSimsFinished}
+				/>
+			{/each}
+		</div>
 	</div>
-	<div style="padding-top: 4rem;">
+	<!-- OLD STYLE -->
+	<!-- <div style="padding-top: 4rem;">
 		<div class="sim-generation-panel">
 			<form on:submit={addSimulation}>
 				<label for="optimal">Optimal phenotype</label>
@@ -204,7 +219,8 @@
 				{yAxisLabel}
 			/>
 		</section>
-	</div>
+	</div> -->
+	<!-- OLD STYLE -->
 </main>
 
 <style>
@@ -214,9 +230,11 @@
 	}
 
 	.substitute-main {
-		min-height: 100vh;
+		height: 100vh;
 		background-color: whitesmoke;
 		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		grid-template-rows: repeat(5, minmax(0, 1fr));
 		grid-template-areas:
 			'c c c g g g g g g g g g'
 			'c c c g g g g g g g g g'
@@ -247,12 +265,11 @@
 
 	.graph {
 		grid-area: g;
-		background-color: crimson;
 	}
 
 	.sims {
 		grid-area: s;
-		background-color: chartreuse;
+		overflow-y: scroll;
 	}
 
 	.output-grid {

@@ -83,7 +83,6 @@
 
 <style>
 	.simulation-configs-list {
-		flex: 0 0 800px;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
