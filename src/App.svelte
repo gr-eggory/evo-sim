@@ -278,8 +278,9 @@
 		padding: .75rem;
 		display: grid;
 		grid-template-columns: 2fr repeat(4, 1fr);
-		grid-template-rows: 50px;
-		grid-auto-rows: 60px;
+		grid-template-rows: 30px;
+		grid-auto-rows: 50px;
+		gap: 15px;
 	}
 
 	.output-grid {
