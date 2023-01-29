@@ -275,11 +275,12 @@
 	.sims {
 		grid-area: s;
 		overflow-y: scroll;
-		padding: .75rem;
+		padding: 12px;
+		position: relative;
 		display: grid;
 		grid-template-columns: 2fr repeat(4, 1fr);
 		grid-template-rows: 30px;
-		grid-auto-rows: 50px;
+		grid-auto-rows: auto;
 		gap: 15px;
 	}
 

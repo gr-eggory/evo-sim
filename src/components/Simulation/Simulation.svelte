@@ -81,7 +81,7 @@
 	<h3 class="generation">Generation: {generation}</h3>
 </div> -->
 <!-- <div class="sim-container"> -->
-<div>
+<div class="phenotypes-container">
 	<p>{optimal}</p>
 	<p style={`color: ${textColor};`}>
 		{closestIndividual}
@@ -94,6 +94,15 @@
 
 <!-- </div> -->
 <style>
+	.phenotypes-container::before {
+		content: '';
+		position: absolute;
+		background-color: rgba(128, 128, 128, .5);
+		height: 1px;
+		width: 100%;
+		translate: -12px -7px;
+	}
+
 	.sim-container {
 		display: grid;
 		grid-template-columns: 2fr repeat(4, 1fr);
