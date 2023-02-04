@@ -135,8 +135,8 @@
 				/>
 				<button type="submit" disabled={runSimulation}>Add Simulation</button>
 			</form>
-			<hr />
-			<div>
+			<div class="sim-runner">
+				<hr class="sim-runner__divider" />
 				<button on:click={toggleSimulation}
 					>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
 				>
@@ -216,7 +216,7 @@
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
+		gap: 5rem;
 	}
 
 	form {
@@ -239,6 +239,10 @@
 		grid-template-rows: 30px;
 		grid-auto-rows: auto;
 		gap: 15px;
+	}
+
+	.sim-runner__divider {
+		margin-bottom: 1rem;
 	}
 
 	button {
