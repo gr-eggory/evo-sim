@@ -24,12 +24,12 @@
         display: block;
 	}
 	input {
-		height: 2rem;
+		height: 1.75rem;
 		border: 1px solid black;
 		border-radius: 3px;
 		background-color: #fafafa;
         width: 80%;
-        padding: 0rem .5rem;
-        font-size: clamp(.9rem, 1.5vw, 1.1rem);
+        padding: 0rem .45rem;
+        font-size: clamp(.9rem, 1.25vw, 1.1rem);
 	}
 </style>
