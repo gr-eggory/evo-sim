@@ -5,6 +5,7 @@
 	import Graph from './components/Graph/Graph.svelte';
 	import Simulation from './components/Simulation/Simulation.svelte';
 	import TextField from './components/TextField/TextField.svelte';
+	import Button from './components/Button/Button.svelte';
 	import type { FormSubmitEvent } from './types/dom';
 	import { allSimsReady } from './util';
 	import { scaleOrdinal, schemeSet1 } from 'd3';
@@ -133,13 +134,20 @@
 					id="mutation-rate"
 					type="number"
 				/>
-				<button type="submit" disabled={runSimulation}>Add Simulation</button>
+				<Button
+					content="Add Simulation"
+					disabled={runSimulation}
+					type="submit"
+				/>
 			</form>
 			<div class="sim-runner">
 				<hr class="sim-runner__divider" />
-				<button on:click={toggleSimulation}
-					>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
-				>
+				<Button
+					content={`${
+						runSimulation && !allSimsFinished ? 'Stop' : 'Begin'
+					} Simulation`}
+					on:click={toggleSimulation}
+				/>
 				<label for="log-checkbox">logorithmic</label>
 				<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
 			</div>
@@ -245,10 +253,6 @@
 
 	.sim-runner__divider {
 		margin-bottom: 1rem;
-	}
-
-	button {
-		cursor: pointer;
 	}
 
 	input[type='checkbox'] {
