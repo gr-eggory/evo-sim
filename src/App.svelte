@@ -90,8 +90,8 @@
 	};
 
 	// GRAPH SECTION
-	let width: number;
-	let height: number;
+	let width = 0;
+	let height = 0;
 	const margin: Margin = { top: 40, right: 30, bottom: 70, left: 80 };
 	const xAxisLabelOffset = 50;
 	const yAxisLabelOffset = 45;
