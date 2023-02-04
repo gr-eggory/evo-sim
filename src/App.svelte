@@ -226,6 +226,7 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		gap: clamp(1rem, 3vh, 5rem);
+		overflow-y: auto;
 	}
 
 	.config-form {
