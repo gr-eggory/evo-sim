@@ -4,6 +4,7 @@
 	import type { Margin } from './types/layout';
 	import Graph from './components/Graph/Graph.svelte';
 	import Simulation from './components/Simulation/Simulation.svelte';
+	import TextField from './components/TextField/TextField.svelte';
 	import type { FormSubmitEvent } from './types/dom';
 	import { allSimsReady } from './util';
 	import { scaleOrdinal, schemeSet1 } from 'd3';
@@ -114,16 +115,23 @@
 	<div class="substitute-main">
 		<div class="config box">
 			<form on:submit={addSimulation}>
-				<label for="optimal">Optimal Phenotype</label>
-				<input bind:value={optimalInput} type="text" id="optimal" />
-				<label for="offspring">Offspring per Generation</label>
-				<input bind:value={offspringInput} type="number" id="offspring" />
-				<label for="mutation-rate">Mutation Rate</label>
-				<input
-					bind:value={mutationRateInput}
+				<TextField
+					bind:value={optimalInput}
+					label="Optimal Phenotype"
+					id="optimal"
+					type="text"
+				/>
+				<TextField
+					bind:value={offspringInput}
+					label="Offspring per Generation"
+					id="offspring"
 					type="number"
-					step=".01"
+				/>
+				<TextField
+					bind:value={mutationRateInput}
+					label="Mutation Rate"
 					id="mutation-rate"
+					type="number"
 				/>
 				<button type="submit" disabled={runSimulation}>Add Simulation</button>
 			</form>
