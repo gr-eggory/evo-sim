@@ -72,15 +72,6 @@
 	$: runSimulation ? beginSimulation() : clearInterval(interval);
 </script>
 
-<!-- <div class="simulation-configs-list">
-	<h3 class="optimal__label">Optimal:</h3>
-	<h2 class="optimal__value">{optimal}</h2>
-	<h3 class="success__label">Current phenotype:</h3>
-	<h2 class="success__value" style={`color: ${textColor};`}>{closestIndividual}</h2>
-	<h4>Similarity: {prettifyPercent(currentSimilarity)}</h4>
-	<h3 class="generation">Generation: {generation}</h3>
-</div> -->
-<!-- <div class="sim-container"> -->
 <div class="phenotypes-container">
 	<p>{optimal}</p>
 	<p style={`color: ${textColor};`}>
@@ -92,45 +83,13 @@
 <p>{generation}</p>
 <p>{prettifyPercent(currentSimilarity)}</p>
 
-<!-- </div> -->
 <style>
 	.phenotypes-container::before {
 		content: '';
 		position: absolute;
-		background-color: rgba(128, 128, 128, .5);
+		background-color: rgba(128, 128, 128, 0.5);
 		height: 1px;
 		width: 100%;
 		translate: -12px -7px;
-	}
-
-	.sim-container {
-		display: grid;
-		grid-template-columns: 2fr repeat(4, 1fr);
-		grid-template-rows: 50px;
-		grid-auto-rows: 60px;
-	}
-
-	.simulation-configs-list {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-		align-content: flex-start;
-		border-bottom: 1px solid rgba(38, 30, 30, 0.5);
-	}
-
-	.optimal__label {
-		grid-column: 1;
-	}
-
-	.optimal__value {
-		grid-column: 2;
-	}
-
-	.success__label {
-		grid-column: 1;
-	}
-
-	.generation {
-		grid-column: 2;
 	}
 </style>

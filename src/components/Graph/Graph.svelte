@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		scaleLinear,
-		extent,
-		line,
-		max,
-		groups,
-		scaleOrdinal,
-		schemeSet1,
-	} from 'd3';
+	import { scaleLinear, extent, line, groups } from 'd3';
 
 	import Container from './subcomponents/Container.svelte';
 	import AxisBottom from './subcomponents/AxisBottom.svelte';

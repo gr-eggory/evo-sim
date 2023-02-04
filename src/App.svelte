@@ -86,6 +86,7 @@
 		}
 		runSimulation = !runSimulation;
 	};
+
 	// GRAPH SECTION
 	let width: number;
 	let height: number;
@@ -172,60 +173,6 @@
 			{/each}
 		</div>
 	</div>
-	<!-- OLD STYLE -->
-	<!-- <div style="padding-top: 4rem;">
-		<div class="sim-generation-panel">
-			<form on:submit={addSimulation}>
-				<label for="optimal">Optimal phenotype</label>
-				<input bind:value={optimalInput} type="text" id="optimal" />
-				<label for="offspring">Offspring per Generation</label>
-				<input bind:value={offspringInput} type="number" id="offspring" />
-				<label for="mutation-rate">Mutation rate</label>
-				<input
-					bind:value={mutationRateInput}
-					type="number"
-					step=".01"
-					id="mutation-rate"
-				/>
-				<button type="submit" disabled={runSimulation}>Submit</button>
-			</form>
-		</div>
-		{#each simulations as { id, optimal, mutationRate, offspring } (id)}
-			<Simulation
-				{id}
-				{optimal}
-				{mutationRate}
-				{offspring}
-				textColor={colorScale(`${id}`)}
-				{addRow}
-				{dispatchState}
-				{runSimulation}
-				{allSimsFinished}
-			/>
-		{/each}
-		<button on:click={toggleSimulation}
-			>{runSimulation && !allSimsFinished ? 'Stop' : 'Begin'} Simulation</button
-		>
-		<label for="log-checkbox">logorithmic</label>
-		<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
-		<section class="output-grid">
-			<Graph
-				{width}
-				{height}
-				data={alteredData}
-				{xValue}
-				{yValue}
-				{zValue}
-				{colorScale}
-				{margin}
-				{xAxisLabelOffset}
-				{yAxisLabelOffset}
-				{xAxisLabel}
-				{yAxisLabel}
-			/>
-		</section>
-	</div> -->
-	<!-- OLD STYLE -->
 </main>
 
 <style>
@@ -259,7 +206,6 @@
 	.config {
 		grid-area: c;
 		padding: 1rem;
-		/* background-color: aqua; */
 	}
 
 	form {
@@ -282,14 +228,6 @@
 		grid-template-rows: 30px;
 		grid-auto-rows: auto;
 		gap: 15px;
-	}
-
-	.output-grid {
-		/* display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); */
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
 	}
 
 	button {
