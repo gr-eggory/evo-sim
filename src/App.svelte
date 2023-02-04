@@ -114,11 +114,11 @@
 	<div class="substitute-main">
 		<div class="config box">
 			<form on:submit={addSimulation}>
-				<label for="optimal">Optimal phenotype</label>
+				<label for="optimal">Optimal Phenotype</label>
 				<input bind:value={optimalInput} type="text" id="optimal" />
 				<label for="offspring">Offspring per Generation</label>
 				<input bind:value={offspringInput} type="number" id="offspring" />
-				<label for="mutation-rate">Mutation rate</label>
+				<label for="mutation-rate">Mutation Rate</label>
 				<input
 					bind:value={mutationRateInput}
 					type="number"
@@ -206,6 +206,9 @@
 	.config {
 		grid-area: c;
 		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
 	}
 
 	form {
