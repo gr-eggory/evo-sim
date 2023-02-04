@@ -232,7 +232,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 1.75rem;
+		gap: clamp(.5rem, 1.5vh, 1.75rem);
 	}
 
 	.graph {
