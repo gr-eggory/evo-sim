@@ -114,7 +114,7 @@
 <main>
 	<div class="substitute-main">
 		<div class="config box">
-			<form on:submit={addSimulation}>
+			<form on:submit={addSimulation} class="config-form">
 				<TextField
 					bind:value={optimalInput}
 					label="Optimal Phenotype"
@@ -213,16 +213,18 @@
 
 	.config {
 		grid-area: c;
-		padding: 1rem;
+		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
-		gap: 5rem;
+		justify-content: flex-start;
+		gap: clamp(1rem, 3vh, 5rem);
 	}
 
-	form {
+	.config-form {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		gap: 1.75rem;
 	}
 
 	.graph {
