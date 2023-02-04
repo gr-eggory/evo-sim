@@ -220,7 +220,7 @@
 
 	.sims {
 		grid-area: s;
-		overflow-y: scroll;
+		overflow-y: auto;
 		padding: 12px;
 		position: relative;
 		display: grid;
