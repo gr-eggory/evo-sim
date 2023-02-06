@@ -19,7 +19,7 @@
 	let offspringInput = defulatOffspring;
 
 	let runSimulation = false;
-	let logorithmic = false;
+	let logarithmic = false;
 
 	const initialSim: SimulationConfig = {
 		id: 0,
@@ -107,7 +107,7 @@
 	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1) as (
 		id: string
 	) => string;
-	$: alteredData = logorithmic
+	$: alteredData = logarithmic
 		? data.map((d) => ({ ...d, generation: Math.log10(d.generation) }))
 		: data;
 </script>
@@ -148,8 +148,8 @@
 					} Simulation`}
 					on:click={toggleSimulation}
 				/>
-				<label for="log-checkbox">logorithmic</label>
-				<input type="checkbox" bind:checked={logorithmic} id="log-checkbox" />
+				<label for="log-checkbox">logarithmic</label>
+				<input type="checkbox" bind:checked={logarithmic} id="log-checkbox" />
 			</div>
 		</div>
 		<div class="graph box" bind:clientWidth={width} bind:clientHeight={height}>
