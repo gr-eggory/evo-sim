@@ -12,7 +12,7 @@
 
 	const defaultOptimal = '';
 	const defaultMutationRate = 0.01;
-	const defulatOffspring = 20;
+	const defulatOffspring = 25;
 
 	let optimalInput = defaultOptimal;
 	let mutationRateInput = defaultMutationRate;
