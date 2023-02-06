@@ -14,5 +14,14 @@
 <style>
 	button {
         cursor: pointer;
+		background-color: #F4F4F4;
+		border: 1px solid black;
+		border-radius: 3px;
+		font-family: inherit;
+		padding: .2rem .4rem;
+	}
+
+	button:hover {
+		background-color: #eeeeee;
 	}
 </style>
