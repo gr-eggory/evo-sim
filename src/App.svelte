@@ -103,6 +103,9 @@
 	const yValue = (d: Row) => d.similarity;
 
 	const zValue = (d: Row | { id: number }) => d.id;
+
+	const tooltip = (d: Row) => d.phenotype;
+
 	$: zDomain = simulations.map(({ id }) => `${id}`);
 	$: colorScale = scaleOrdinal().domain(zDomain).range(schemeSet1) as (
 		id: string
@@ -160,6 +163,7 @@
 				{xValue}
 				{yValue}
 				{zValue}
+				{tooltip}
 				{colorScale}
 				{margin}
 				{xAxisLabelOffset}

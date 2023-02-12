@@ -64,7 +64,12 @@
 			closestIndividual = newBest.text;
 			currentSimilarity = newBest.closeenessToOptimal;
 			children = generateChildren(closestIndividual, mutationRate, offspring);
-			addRow({ id, generation, similarity: currentSimilarity * 100 });
+			addRow({
+				id,
+				generation,
+				similarity: currentSimilarity * 100,
+				phenotype: closestIndividual,
+			});
 			generation++;
 		}, 10);
 	};

@@ -2,6 +2,7 @@ export interface Row {
 	id: number;
 	generation: number;
 	similarity: number;
+	phenotype: string;
 }
 
 export interface SimulationConfig {

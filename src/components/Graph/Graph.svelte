@@ -6,6 +6,7 @@
 	import AxisLeft from './subcomponents/AxisLeft.svelte';
 	import Line from './subcomponents/Line.svelte';
 	import type { Margin } from '../../types/layout';
+	import Points from './subcomponents/Points.svelte';
 
 	export let width: number;
 	export let height: number;
@@ -20,6 +21,7 @@
 	export let xValue: (d: T) => number;
 	export let yValue: (d: T) => number;
 	export let zValue: (d: T) => number;
+	export let tooltip: (d: T) => string;
 	export let colorScale: (id: string) => string;
 
 	$: innerHeight = height - margin.top - margin.bottom;
@@ -58,5 +60,6 @@
 			linePath={linePathGenerator(groupData)}
 			stroke={colorScale(`${groupId}`)}
 		/>
+		<Points data={groupData} {xValue} {yValue} {tooltip} {xScale} {yScale} />
 	{/each}
 </Container>
