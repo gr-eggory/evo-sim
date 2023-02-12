@@ -18,10 +18,10 @@
 		border: 1px solid black;
 		border-radius: 3px;
 		font-family: inherit;
-		padding: .2rem .4rem;
+		padding: .15rem .4rem;
 	}
 
 	button:hover {
-		background-color: #eeeeee;
+		background-color: #e2e2e2;
 	}
 </style>
