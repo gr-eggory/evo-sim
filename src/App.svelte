@@ -174,6 +174,7 @@
 			<p>Children per Gen</p>
 			<p>Generation</p>
 			<p>Similarity</p>
+			<p></p>
 			{#each simulations as { id, optimal, mutationRate, offspring } (id)}
 				<Simulation
 					{id}
@@ -246,10 +247,11 @@
 		padding: 12px;
 		position: relative;
 		display: grid;
-		grid-template-columns: 2fr repeat(4, 1fr);
+		grid-template-columns: 2fr repeat(4, 1fr) 3%;
 		grid-template-rows: 30px;
 		grid-auto-rows: auto;
 		gap: 15px;
+		align-items: flex-start;
 	}
 
 	.sim-runner__divider {
