@@ -11,7 +11,12 @@
 </script>
 
 {#each data as d (xValue(d))}
-	<circle cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={7} fill="transparent"
-		><title>{tooltip(d)}</title></circle
+	<circle
+		cx={xScale(xValue(d))}
+		cy={yScale(yValue(d))}
+		r={7}
+		fill="transparent"
 	>
+		<title>{tooltip(d)}</title>
+	</circle>
 {/each}
