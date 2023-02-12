@@ -21,7 +21,11 @@
 		padding: .15rem .4rem;
 	}
 
-	button:hover {
+	button:hover:enabled {
 		background-color: #e2e2e2;
+	}
+
+	button:disabled {
+		cursor: default;
 	}
 </style>
