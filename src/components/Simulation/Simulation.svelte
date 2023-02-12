@@ -8,6 +8,7 @@
 		findBestChild,
 		prettifyPercent,
 	} from '../../util';
+	import Button from '../Button/Button.svelte';
 
 	export let id: number;
 	export let runSimulation: boolean;
@@ -82,6 +83,7 @@
 <p>{offspring}</p>
 <p>{generation}</p>
 <p>{prettifyPercent(currentSimilarity)}</p>
+<Button content="X" disabled={runSimulation} />
 
 <style>
 	.phenotypes-container::before {
