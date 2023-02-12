@@ -14,22 +14,15 @@
 	const defaultMutationRate = 0.01;
 	const defulatOffspring = 25;
 
-	let optimalInput = defaultOptimal;
+	let optimalInput = 'methinks it is like a weasel';
 	let mutationRateInput = defaultMutationRate;
 	let offspringInput = defulatOffspring;
 
 	let runSimulation = false;
 	let logarithmic = false;
 
-	const initialSim: SimulationConfig = {
-		id: 0,
-		optimal: 'methinks it is like a weasel',
-		mutationRate: 0.01,
-		offspring: 25,
-	};
-
 	// GRAPH
-	let simulations: SimulationConfig[] = [initialSim];
+	let simulations: SimulationConfig[] = [];
 	let data: Row[] = [];
 	$: simStates = allSimsReady(simulations.length);
 	let allSimsFinished = false;
@@ -237,7 +230,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: clamp(.5rem, 1.5vh, 1.75rem);
+		gap: clamp(0.5rem, 1.5vh, 1.75rem);
 	}
 
 	.graph {
