@@ -28,6 +28,9 @@
 	let allSimsFinished = false;
 	// ------
 
+	$: simButtonDisabled = simulations.length <= 0;
+
+
 	const addRow = (row: Row) => {
 		data.push(row);
 		data = data;
@@ -143,6 +146,7 @@
 						runSimulation && !allSimsFinished ? 'Stop' : 'Begin'
 					} Simulation`}
 					on:click={toggleSimulation}
+					disabled={simButtonDisabled}
 				/>
 				<label for="log-checkbox">logarithmic</label>
 				<input type="checkbox" bind:checked={logarithmic} id="log-checkbox" />
